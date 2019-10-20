@@ -1,0 +1,15 @@
+"sidescroll"
+{
+  "base" "base"
+  "title" "sidescroll"
+  "version" "2019.03.28"
+  "menusystem" "1"
+
+  "author_name" "Scott"
+  "author_email" ""
+  "author_url" "scott.co"
+
+  "icon"  ""
+  "info"  ""
+  "hide"  "0"
+}
