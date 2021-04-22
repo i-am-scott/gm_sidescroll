@@ -10,8 +10,8 @@ local color_outline = col.grey
 local color_button = col.black
 local color_button_disabled = Color(0,0,0,100)
 local color_loadingbg = Color(25, 25, 25, 255)
-local color_white = col.white 
-local color_red = col.red 
+local color_white = col.white
+local color_red = col.red
 local color_green = col.green
 local color_black = col.black
 local color_grey  = col.grey
@@ -42,8 +42,8 @@ end
 
 local barw, barh = 225, 8
 function SKIN:PaintFrameLoading(self, w, h)
-	if not self.loading then 
-		return 
+	if not self.loading then
+		return
 	end
 
 	draw.Box(0, 30, w, h - 30, color_loadingbg)
@@ -56,7 +56,7 @@ function SKIN:PaintFrameLoading(self, w, h)
 
         local perc = 1 - (self.loadendtime-CurTime())/self.loadtimeout
         draw.Box(x/2, y+90, barw*perc, barh, col.blue)
-    end  
+    end
 end
 
 function SKIN:PaintSpacer(self, w, h)
@@ -84,7 +84,7 @@ end
 
 function SKIN:PaintButtonAnimated(self,w,h)
 	SKIN:PaintButton(self,w,h)
-	if not self.icon then 
+	if not self.icon then
 		return
 	end
 
@@ -121,7 +121,7 @@ function SKIN:PaintDropdown(self, w, h)
 end
 
 function SKIN:PaintTextInput(self, w, h)
-	if self.outline then 
+	if self.outline then
 		draw.OutlinedBox(0, 0, w, h, self.m_bgColor or color_button, self.outline)
 	else
 		draw.Box(0, 0, w, h, self.m_bgColor or color_button)
@@ -142,7 +142,7 @@ function SKIN:PaintNumberInput(self, w, h)
 end
 
 function SKIN:PaintTextInputOverlay(self, w, h)
-    if self.outline then 
+    if self.outline then
         surface.SetDrawColor(color_outline)
         surface.DrawOutlinedRect(0, 0, w, h)
     end

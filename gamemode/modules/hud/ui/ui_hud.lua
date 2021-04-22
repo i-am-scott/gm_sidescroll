@@ -11,7 +11,6 @@ function PANEL:Init()
 end
 
 function PANEL:Paint()
+
 end
 vgui.Register('ss_hud', PANEL, 'ss_base')
-
-RunConsoleCommand('ss_hud')

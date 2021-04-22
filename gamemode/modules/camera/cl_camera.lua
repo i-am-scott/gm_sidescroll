@@ -19,7 +19,7 @@ end
 
 function camera.Move(pos, ang)
 	camera.des_pos = pos
-	if ang then 
+	if ang then
 		camera.des_ang = ang
 	end
 end
@@ -29,8 +29,8 @@ function camera.Follow(e)
 end
 
 function camera.Control(pl, pos, ang, fov)
-	if not camera.enabled then 
-		return 
+	if not camera.enabled then
+		return
 	end
 
 	return {
@@ -60,14 +60,14 @@ function camera.GetAngle()
 end
 
 hook('ShouldDrawLocalPlayer', function()
-    return true 
+    return true
 end)
 
-hook('OnPlayerLoaded', 'LoadSideCam', function(pl) 
+hook('OnPlayerLoaded', 'LoadSideCam', function(pl)
 	camera.Enable(true)
 end)
 
-net('camera.Follow', function() 
+net('camera.Follow', function()
 	local e = net.ReadEntity()
 	if not IsValid(e) then
 		return
@@ -76,11 +76,11 @@ net('camera.Follow', function()
 	camera.Follow(e)
 end)
 
-net('camera.MoveTo', function() 
+net('camera.MoveTo', function()
 	camera.Move(net.ReadVector(), net.ReadAngle())
 end)
 
-net('camera.SetPos', function() 
+net('camera.SetPos', function()
 	local pos = net.ReadVector()
 	local ang = net.ReadAngle()
 

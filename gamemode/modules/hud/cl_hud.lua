@@ -10,8 +10,24 @@ function ss.hud.Display()
 		ss.hud.ui = ui
 	end)
 end
-hook('PlayerLoaded', ss.hud.Display)
+hook('OnPlayerLoaded', ss.hud.Display)
 
-concommand.Add('ss_hud', function() 
+local belowOffset = Vector(0, 0, -50)
+function PLAYER:Draw3DBelow()
+	local plPos = self:GetPos()
+
+	local pos = plPos - belowOffset
+	local ang = Angle(camera.cur_ang.p, camera.cur_ang.y, camera.cur_ang.r)
+
+	cam.Start3D2D(pos, ang, 1)
+		draw.DrawText(self:Nick(), 'DermaDefault', 0, 0, Color( 255, 255, 255, 255 ), TEXT_ALIGN_CENTER)
+	cam.End3D2D()
+end
+
+hook('PostDrawPlayer', 'PLAYER.DrawBelow', function(pl)
+	pl:DrawBelow()
+end)
+
+concommand.Add('ss_hud', function()
 	ss.hud.Display()
 end)

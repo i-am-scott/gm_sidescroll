@@ -16,6 +16,6 @@ ss.abilities.Create('invuln')
     :OnExit(function(self, pl, data)
 
     end)
-    :Think(function(self, pl, data)
+    :OnThink(function(self, pl, data)
 
     end)

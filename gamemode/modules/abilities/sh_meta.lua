@@ -11,6 +11,39 @@ function ABILITY:SetName(str)
     return self
 end
 
+function ABILITY:AddPlayer(pl)
+	self.Players[pl] = {
+		Active = false,
+		NextUse = 0,
+	}
+end
+
+function ABILITY:SetActive(pl, b)
+	self.Players[pl].Active = b
+
+	if b then
+		self:OnSelected(self, pl)
+	else
+		self:OnDeselected(self, pl)
+	end
+end
+
+function ABILITY:SetPlayerCooldown(pl)
+	self.Players[pl].NextUse = CurTime() + self:GetCooldown()
+end
+
+function ABILITY:IsPlayerInCooldown(pl)
+	return (self.Players[pl].Cooldown or 0) > CurTime()
+end
+
+function ABILITY:CanPlayerUse(pl)
+	return not self:IsPlayerInCooldown(pl) // Add use times here.
+end
+
+function ABILITY:RemovePlayer(pl)
+	self.Players[pl] = nil
+end
+
 function ABILITY:GetName()
     return self.name
 end
@@ -71,15 +104,22 @@ function ABILITY:OnExit(func)
     return self
 end
 
-function ABILITY:Think(func)
+function ABILITY:OnThink(func)
     self.Think = func
     return self
 end
 
-function ss.abilities.Create(id)
-    local t = setmetatable({id = id}, ABILITY)
+function ABILITY:Think(pl)
 
-    t.internalid = table.insert(abilities_mapped, t)
+end
+
+function ss.abilities.Create(id)
+    local t = setmetatable({
+		id = id,
+		Players = {}
+	}, ABILITY)
+
+    t.internal = table.insert(abilities_mapped, t)
     abilities[id] = t
     return t
 end
@@ -87,3 +127,15 @@ end
 function ss.abilities.Get(id, internal)
     return internal and abilities_mapped[id] or abilities[id]
 end
+
+hook('Think', 'ss.abilities.Think', function()
+	for i = 1, #abilities_mapped do
+		local ability = abilities_mapped[i]
+
+		if table.Count(ability.Players) > 0 then
+			for pl, _ in pairs(ability.Players) do
+				ability:Think(pl)
+			end
+		end
+	end
+end)

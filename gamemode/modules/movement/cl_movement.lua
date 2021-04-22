@@ -22,10 +22,6 @@ hook('InputMouseApply', function(cmd, x, y, ang)
     return true
 end)
 
-hook('ShouldCollide', function(e1, e2)
-    return (e1:IsPlayer() and e2:IsPlayer()) and false
-end)
-
 hook('Think', function()
     local vel = LocalPlayer():GetVelocity():Length2D()
     local maxspeed = LocalPlayer():GetRunSpeed()
@@ -51,6 +47,7 @@ end
 
 hook('HUDPaint', function()
 	local pos = LocalPlayer():GetEyeTrace().HitPos:ToScreen()
+
 	if math.abs(aimx-pos.x) < 35 and math.abs(aimy-pos.y) < 35 then
 		surface.SetDrawColor(255, 255, 255, 255)
 		drawCorsshair(aimx, aimy)
@@ -62,8 +59,5 @@ hook('HUDPaint', function()
 		drawCorsshair(pos.x, pos.y)
 
 		surface.SetDrawColor(255, 255, 255, 55)
-		if pos.x > 0 and pos.x < ScrW() and pos.y > 0 and pos.y < ScrH() then
-			surface.DrawLine(pos.x, pos.y, aimx, aimy)
-		end
 	end
 end)
