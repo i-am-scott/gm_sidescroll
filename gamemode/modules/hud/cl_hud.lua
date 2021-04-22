@@ -71,9 +71,9 @@ function PLAYER:DrawDamage(x, y)
 	end
 
 	local size = 100
-	surface.SetDrawColor(weaponColor)
 
-	camera.PaintFunc(surface.DrawCircle, x, y, 100, 255, 0, 0, 255)
+	surface.SetDrawColor(255, 0, 0, 100)
+	camera.PaintFunc(surface.DrawArc, x, y, size - 50, size, 0, 360, 60)
 end
 
 function PLAYER:DrawPlayerTarget(x, y)
@@ -102,8 +102,8 @@ function PLAYER:Draw3DBelow()
 
 	self.PlayerInfoOffset = LerpVector(15 * RealFrameTime(), self.PlayerInfoOffset or pos, pos + (facingRight and sideOffsetLeft or sideOffsetRight))
 
-	//self.PlayerInfoOffset = self:GetPos()
-	//self.PlayerInfoOffset.z = self.PlayerInfoOffset.z + 82
+	self.PlayerInfoOffset = self:GetPos()
+	self.PlayerInfoOffset.z = self.PlayerInfoOffset.z + 82
 
 	local x, y = self.PlayerInfoOffset.x, self.PlayerInfoOffset.z
 	local weapon = self:GetActiveWeapon()
@@ -139,16 +139,23 @@ function PLAYER:Draw3DBelow()
 end
 
 local bullets = {}
+local soundSources = {}
 
-local function drawBullets()
+local function drawEffects()
 	camera.StartWall(1)
 
-		for i, bullet in ipairs(bullets) do
-			if CurTime() > bullet.dietime then
-				table.remove(bullets, i)
-				continue
-			end
+		for i, source in ipairs(soundSources) do
+			local percent = math.Clamp(1 - (source.dietime - CurTime())/(source.dietime - source.startime), 0, 1)
+			local color = HSVToColor(source.colorFrom + source.colorTo * percent, 1, .75)
+			local circlePos = source.startpos
+			local size = source.size * percent
 
+			draw.NoTexture()
+			surface.SetDrawColor(color)
+			camera.PaintFunc(surface.DrawArc, circlePos.x, circlePos.z, size - 50, size, 0, 360, 60)
+		end
+
+		for i, bullet in ipairs(bullets) do
 			local percent = math.Clamp(1 - (bullet.dietime - CurTime())/(bullet.dietime - bullet.startime), 0, 1)
 			local pos = bullet.startpos + bullet.direction * (5000 * percent)
 
@@ -158,13 +165,42 @@ local function drawBullets()
 	camera.EndWall()
 end
 
+local function addCircles(ent, pos, duration, size, colorFrom)
+	if #soundSources > 100 then
+		table.remove(soundSources, 1)
+	end
+
+	table.insert(soundSources, {
+		ent = ent,
+		startpos = pos,
+		startime = CurTime(),
+		dietime = CurTime() + duration,
+		size = size,
+		colorFrom = colorFrom or 0,
+		colorTo = math.random(0, 100)
+	})
+end
+
+hook('EntityEmitSound', function(tbl)
+	if not tbl.Pos then return end
+
+	addCircles(ent, tbl.Pos, math.random() * 1, math.random(25, 500), 200)
+end)
+
 hook('EntityFireBullets', function(ent, data)
+	if #bullets > 255 then
+		table.remove(bullets, 1)
+	end
+
 	table.insert(bullets, {
+		ent = ent,
 		startime = CurTime(),
 		dietime = CurTime() + 2,
 		startpos = data.Src,
 		direction = data.Dir
 	})
+
+	addCircles(ent, ent.PlayerInfoOffset or ent:GetPos(), math.random() * 2, math.random(50, 1000), 100)
 end)
 
 hook('ScalePlayerDamage', function(pl, hitgroup, dmginfo)
@@ -172,15 +208,13 @@ hook('ScalePlayerDamage', function(pl, hitgroup, dmginfo)
 end)
 
 hook('PreDrawTranslucentRenderables', 'PLAYER.DrawBelow', function()
+	drawEffects()
+
 	for _, pl in ipairs(player.GetAll()) do
 		pl:Draw3DBelow()
 	end
-
-	drawBullets()
 end)
 
---[[
-	hook('PrePlayerDraw', function(pl)
-		return false
-	end)
-]]
+hook('PrePlayerDraw', function(pl)
+	return true
+end)
