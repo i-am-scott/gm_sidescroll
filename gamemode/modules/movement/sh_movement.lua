@@ -14,6 +14,14 @@ function PLAYER:SetJumpPad(b)
 	return self:SetNetVar('ss.JumpPad', b)
 end
 
+function PLAYER:IsLookingUp()
+	return self:GetForward().z > 0
+end
+
+function PLAYER:IsFacingRight()
+	return self:GetForward().x > 0
+end
+
 hook('SetupMove', function(pl, mv, cmd)
     local angle = mv:GetAngles()
     local forward = mv:GetForwardSpeed()

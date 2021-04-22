@@ -10,6 +10,10 @@ function PANEL:Init()
 	self:Populate()
 end
 
+function PANEL:Populate()
+
+end
+
 function PANEL:Paint()
 
 end
