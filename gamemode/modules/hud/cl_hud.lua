@@ -102,8 +102,8 @@ function PLAYER:Draw3DBelow()
 
 	self.PlayerInfoOffset = LerpVector(15 * RealFrameTime(), self.PlayerInfoOffset or pos, pos + (facingRight and sideOffsetLeft or sideOffsetRight))
 
-	self.PlayerInfoOffset = self:GetPos()
-	self.PlayerInfoOffset.z = self.PlayerInfoOffset.z + 82
+	-- self.PlayerInfoOffset = self:GetPos()
+	-- self.PlayerInfoOffset.z = self.PlayerInfoOffset.z + 82
 
 	local x, y = self.PlayerInfoOffset.x, self.PlayerInfoOffset.z
 	local weapon = self:GetActiveWeapon()
@@ -216,5 +216,5 @@ hook('PreDrawTranslucentRenderables', 'PLAYER.DrawBelow', function()
 end)
 
 hook('PrePlayerDraw', function(pl)
-	return true
+	return false
 end)
