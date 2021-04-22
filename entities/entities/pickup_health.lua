@@ -5,6 +5,7 @@ ENT.PrintName = 'Health Pickup'
 ENT.Category = 'Sidescroll'
 ENT.Spawnable = true
 ENT.Model = 'models/items/medkit_small.mdl'
+ENT.PickupSound = Sound 'items/medshot4.wav'
 
 function ENT:PlayerPickup(pl)
     local hp, maxhp = pl:Health(), pl:GetMaxHealth()

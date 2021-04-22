@@ -2,7 +2,7 @@ AddCSLuaFile 'shared.lua'
 AddCSLuaFile 'cl_init.lua'
 include 'shared.lua'
 
-ENT.PickupSound = Sound 'passtime/ball_smack.wav'
+ENT.PickupSound = Sound 'items/ammo_pickup.wav'
 ENT.Cooldown = 5
 
 function ENT:StartTouch(pl)

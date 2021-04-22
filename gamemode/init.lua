@@ -18,6 +18,8 @@ end
 
 function GM:PlayerSpawn(pl)
     pl:SetPos(Vector(-547, 0, 64))
+	pl:SetTeam(1)
+	pl:SetNoCollideWithTeammates(true)
     self:PlayerLoadout(pl)
 end
 

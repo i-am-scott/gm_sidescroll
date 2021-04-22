@@ -7,11 +7,12 @@ ENT.Spawnable = true
 ENT.Model = 'models/items/tf_gift.mdl'
 
 ENT.Weapons = {
-    'weapon_pistol', 
-    'weapon_ar2', 
-    'weapon_smg1', 
-    'weapon_rpg', 
-    'weapon_crossbow'
+    'weapon_pistol',
+    'weapon_ar2',
+    'weapon_smg1',
+    'weapon_rpg',
+    'weapon_crossbow',
+	'weapon_fists'
 }
 
 function ENT:PlayerPickup(pl)

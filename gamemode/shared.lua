@@ -1,5 +1,5 @@
 GM.Version = '0.0.1'
-GM.Name = 'Sidescroll with Nans'
+GM.Name = 'Sidescroller Thing'
 GM.Author = 'Scott'
 GM.Website = ''
 DeriveGamemode 'base'
