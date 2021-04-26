@@ -165,7 +165,12 @@ local function drawEffects()
 	camera.EndWall()
 end
 
+local show_circles = false
 local function addCircles(ent, pos, duration, size, colorFrom)
+	if not show_circles then
+		return
+	end
+
 	if #soundSources > 100 then
 		table.remove(soundSources, 1)
 	end
