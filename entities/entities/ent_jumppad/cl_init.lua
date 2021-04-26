@@ -5,6 +5,10 @@ ENT.UIOffset = Vector(0,0,50)
 local chevron = Material 'materials/sidescroller/chevron.png'
 
 function ENT:Draw()
+
+end
+
+function ENT:DrawTranslucent()
 	self:DrawModel()
 
 	camera.Start3D2DFromView(self:GetPos() + self.UIOffset, 1, function()
