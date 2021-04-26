@@ -5,13 +5,13 @@ local entTable = {
             Ang = Angle()
         }
     },
-    pickup_weapon = {
+    pickup_ammo = {
         {
             Pos = Vector(350, 0, 50),
             Ang = Angle()
         }
     },
-    pickup_ammo = {
+    pickup_weapon = {
         {
             Pos = Vector(-400, 0, 50),
             Ang = Angle()
@@ -22,13 +22,19 @@ local entTable = {
             Pos = Vector(-200, 0, 400),
             Ang = Angle()
         }
+    },
+    pickup_ability = {
+        {
+            Pos = Vector(175, 0, 400),
+            Ang = Angle()
+        }
     }
 }
 
 local function SpawnEntities()
     for class, lst in pairs(entTable) do
-        for _, ent in ipairs(ents.FindByClass(class)) do 
-            ent:Remove() 
+        for _, ent in ipairs(ents.FindByClass(class)) do
+            ent:Remove()
         end
 
         for _, data in pairs(lst) do
