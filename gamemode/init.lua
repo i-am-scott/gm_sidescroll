@@ -13,7 +13,7 @@ loader.AddWorkshopItems({
 
 function GM:PlayerInitialSpawn(pl)
 	pl:SetTeam(TEAM_PLAYER)
-	pl:SetModel 'models/player/alyx.mdl'
+	pl:SetModel 'models/player/p2_chell.mdl'
 end
 
 function GM:PlayerSpawn(pl)
