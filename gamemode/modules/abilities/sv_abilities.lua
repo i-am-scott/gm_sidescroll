@@ -1,11 +1,11 @@
-ss.abilities = {}
+ss.abilities = ss.abilities or {}
 local pinfo = {}
 
 util.AddNetworkString 'ss.abilities.AddAbility'
 util.AddNetworkString 'ss.abilities.RemoveAbility'
 
 function ss.abilities.Add(pl, id, internal)
-	local ability = srp.abilities.Get(id, internal)
+	local ability = ss.abilities.Get(id, internal)
 	if not ability then
 		return
 	end
@@ -21,7 +21,7 @@ function ss.abilities.Add(pl, id, internal)
 end
 
 function ss.abilities.Remove(pl, id, internal)
-	local ability = srp.abilities.Get(id, internal)
+	local ability = ss.abilities.Get(id, internal)
 	if not ability then
 		return
 	end
@@ -35,7 +35,7 @@ function ss.abilities.Remove(pl, id, internal)
 end
 
 function ss.abilities.RequestActivate(pl, id, internal)
-	local ability = srp.abilities.Get(id, internal)
+	local ability = ss.abilities.Get(id, internal)
 	if not ability then
 		return
 	end

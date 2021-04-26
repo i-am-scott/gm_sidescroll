@@ -2,7 +2,7 @@ ss.abilities = ss.abilities or {}
 ss.abilities.ui = ss.abilities.ui
 
 function ss.abilities.Add(pl, id, internal)
-	local ability = srp.abilities.Get(id, internal)
+	local ability = ss.abilities.Get(id, internal)
 	if not ability then
 		return
 	end
@@ -10,7 +10,7 @@ function ss.abilities.Add(pl, id, internal)
 	ability:AddPlayer(pl)
 
 	if pl == LocalPlayer() then
-		ss.abilities.ui:AddAbility(abilitiy)
+		ss.abilities.ui:AddAbility(ability)
 	end
 
 	hook.Run('OnAbilityAdded', pl, ability)
@@ -18,7 +18,7 @@ function ss.abilities.Add(pl, id, internal)
 end
 
 function ss.abilities.Remove(pl, id, internal)
-	local ability = srp.abilities.Get(id, internal)
+	local ability = ss.abilities.Get(id, internal)
 	if not ability then
 		return
 	end
@@ -32,7 +32,7 @@ function ss.abilities.Remove(pl, id, internal)
 end
 
 function ss.abilities.RequestActivate(pl, id, internal)
-	local ability = srp.abilities.Get(id, internal)
+	local ability = ss.abilities.Get(id, internal)
 	if not ability then
 		return
 	end
