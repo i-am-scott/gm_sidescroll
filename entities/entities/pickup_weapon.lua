@@ -16,6 +16,8 @@ ENT.Weapons = {
 }
 
 function ENT:PlayerPickup(pl)
+	pl:StripWeapons()
+
     local class = self.Weapons[math.random(#self.Weapons)]
     pl:Give(class)
     pl:SelectWeapon(class)
